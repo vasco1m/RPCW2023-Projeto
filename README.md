@@ -12,6 +12,10 @@ The main dependencies used in this code are:
 - Email-Templates: A module for sending email templates.
 - Mongoose: An Object Data Modeling (ODM) library for MongoDB.
 
+## Datasets
+The datasets used in this project were provided by the professor, and they can be found in this [link](https://drive.google.com/drive/folders/1pJUTOVOGeo1uMxX9WywBrQUmKPKr-EIG?usp=sharing).
+
+
 ## Installation and Setup
 
 To run this code locally, please follow these steps:
@@ -168,7 +172,6 @@ The methods used to deal with the user authentication were developed in the clas
 - `GET /logout`: Logs the user out.
 - `GET /register`: Renders the register page.
 - `POST /register`: Registers a new user.
-
 
 
 ## Views
