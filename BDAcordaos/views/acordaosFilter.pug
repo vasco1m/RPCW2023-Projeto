@@ -1,0 +1,195 @@
+extends layout
+
+block content
+  // Add jQuery JS
+  script(src='http://code.jquery.com/jquery.js')
+  
+  // Add DataTables JS
+  script(src='https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js')
+  
+  // Add Font Awesome for icons
+  link(href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl93x0z1pYS0+09K+qwhYQRJ3axXuhzU866UaqXp8k" crossorigin="anonymous")
+  link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+
+  // Add DataTables CSS
+  link(href='https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css', rel='stylesheet')
+  header
+    h1 Acordãos
+  main
+    div.row
+      div.col
+        section#search-section
+          form#search-form(action="/acordaos/search" method="get")
+            input#search-input(type="search" name="search" placeholder= search ? "" : "Search" value= search ? search : "")
+            button#search-btn(type="submit") Search
+
+          script.
+            const searchInput = document.getElementById('search-input');
+            searchInput.oninput = () => {
+              if (searchInput.value) {
+                searchInput.style.color = 'black';
+              } else {
+                searchInput.style.color = 'grey';
+              }
+            };
+
+            // If there is a value in the search field on page load, change color to black
+            if (searchInput.value) {
+              searchInput.style.color = 'black';
+            }
+
+      div.col.text-right
+        section#filter-section
+          form#filter-form(action="/acordaos/filter" method="get")
+            label(for="category") Tribunal:
+            select#category(name="category")
+              if filter === "all"
+                option(value="all" selected) All
+              else
+                option(value="all") All
+              if filter === "atco1"
+                option(value="atco1" selected) Tribunal Constitucional
+              else
+                option(value="atco1") Tribunal Constitucional
+              if filter === "jcon"
+                option(value="jcon" selected) Tribunal de Conflitos
+              else
+                option(value="jcon") Tribunal de Conflitos
+              if filter === "jtca"
+                option(value="jtca" selected) Tribunal Central Administrativo
+              else
+                option(value="jtca") Tribunal Central Administrativo
+              if filter === "jsta"
+                option(value="jsta" selected) Supremo Tribunal Administrativo
+              else
+                option(value="jsta") Supremo Tribunal Administrativo
+              if filter === "jstj"
+                option(value="jstj" selected) Supremo Tribunal de Justiça
+              else
+                option(value="jstj") Supremo Tribunal de Justiça
+              if filter === "jtcn"
+                option(value="jtcn" selected) Tribunal Central Administrativo Norte
+              else
+                option(value="jtcn") Tribunal Central Administrativo Norte
+              if filter === "jtrc"
+                option(value="jtrc" selected) Tribunal da Relação de Coimbra
+              else
+                option(value="jtrc") Tribunal da Relação de Coimbra
+              if filter === "jtre"
+                option(value="jtre" selected) Tribunal da Relação de Évora
+              else
+                option(value="jtre") Tribunal da Relação de Évora
+              if filter === "jtrg"
+                option(value="jtrg" selected) Tribunal da Relação de Guimarães
+              else
+                option(value="jtrg") Tribunal da Relação de Guimarães
+              if filter === "jtrl"
+                option(value="jtrl" selected) Tribunal da Relação de Lisboa
+              else
+                option(value="jtrl") Tribunal da Relação de Lisboa
+              if filter === "jtrp"
+                option(value="jtrp" selected) Tribunal da Relação do Porto
+              else
+                option(value="jtrp") Tribunal da Relação do Porto
+              if filter === "jdgpj"
+                option(value="jdgpj" selected) Cláusulas Abusivas
+              else
+                option(value="jdgpj") Cláusulas Abusivas
+              if filter === "jtcampca"
+                option(value="jtcampca" selected) Tribunal Central Administrativo Sul - Contencioso Administrativo
+              else
+                option(value="jtcampca") Tribunal Central Administrativo Sul - Contencioso Administrativo
+              if filter === "jtcampct"
+                option(value="jtcampct" selected) Tribunal Central Administrativo Sul - Contencioso Tributário
+              else
+                option(value="jtcampct") Tribunal Central Administrativo Sul - Contencioso Tributário
+            button#filter-btn(type="submit") Filter
+
+    section#results-section
+      table#acordaosTable.table.table-bordered.table-striped.custom-table(style="margin-top: 20px; text-align: center;")
+        thead
+          tr
+            th Nº Conv. / Nº Doc. / Nº Proc.
+            th Data
+            th Tribunal
+        tbody
+          // Data rows will be added dynamically using jQuery DataTables
+
+    div#pagination
+      ul.pagination
+
+  script.
+    $(document).ready(function() {
+          $('#acordaosTable').DataTable({
+            serverSide: true,
+            ajax: {
+              url: '/acordaos/filter/data',
+              data: function(data) {
+                // Add additional parameters here if needed
+                data.category = $('#category').val();
+              },
+              type: 'GET',
+              dataType: 'json',
+              dataSrc: 'data',
+              // Set the total records count received from the server
+              recordsTotal: function(data) {
+                return data.recordsTotal;
+              },
+              error: function(xhr, status, error) {
+                console.error('DataTables Error:', error);
+                console.log('XHR:', xhr);
+                console.log('Status:', status);
+              }
+            },
+            columns: [
+              { 
+                data: null,
+                render: function ( data, type, row ) {
+                  if (data["Processo"]) return data["Processo"];
+                  else if (data["Nº Convencional"]) return data["Nº Convencional"];
+                  else if (data["Nº do Documento"]) return data["Nº do Documento"];
+                  else return 'Undefined';
+                }
+              },
+              { 
+                data: null,
+                render: function ( data, type, row ) {
+                  if (data["Data do Acordão"]) return data["Data do Acordão"];
+                  else if (data["Data da Decisão"]) return data["Data da Decisão"];
+                  else if (data["Data"]) return data["Data"];
+                  else return 'Undefined';
+                }
+              },
+              { 
+                data: null,
+                render: function ( data, type, row ) {
+                  if (data.tribunal === "atco1") return 'Tribunal Constitucional';
+                  else if (data.tribunal === "jcon") return 'Tribunal de Conflitos';
+                  else if (data.tribunal === "jtca") return 'Tribunal Central Administrativo';
+                  else if (data.tribunal === "jsta") return 'Supremo Tribunal Administrativo';
+                  else if (data.tribunal === "jstj") return 'Supremo Tribunal de Justiça';
+                  else if (data.tribunal === "jtcn") return 'Tribunal Central Administrativo Norte';
+                  else if (data.tribunal === "jtrc") return 'Tribunal da Relação de Coimbra';
+                  else if (data.tribunal === "jtre") return 'Tribunal da Relação de Évora';
+                  else if (data.tribunal === "jtrg") return 'Tribunal da Relação de Guimarães';
+                  else if (data.tribunal === "jtrl") return 'Tribunal da Relação de Lisboa';
+                  else if (data.tribunal === "jtrp") return 'Tribunal da Relação do Porto';
+                  else if (data.tribunal === "jdgpj") return 'Cláusulas Abusivas';
+                  else if (data.tribunal === "jtcampca") return 'Tribunal Central Administrativo Sul - Contencioso Administrativo';
+                  else if (data.tribunal === "jtcampct") return 'Tribunal Central Administrativo Sul - Contencioso Tributário';
+                  else return data.tribunal;
+                }
+              }
+            ]
+            });
+            const tbody = document.querySelector('#acordaosTable tbody');
+            const dataTable = $('#acordaosTable').DataTable();
+            tbody.addEventListener('click', function(event) {
+              const target = event.target;
+              const row = target.closest('tr');
+              const rowData = dataTable.row(row).data();
+              const id = rowData._id;
+              const url = `/acordao/${id}`;
+              window.location.href = url;
+            });
+          });

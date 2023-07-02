@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+    form(action="/courts/add" method="post" id="addCourtForm")
+        div#form-container
+            div.form-group
+                label(for="field") Sigla:
+                input#value.form-control(type="text" name="sigla" placeholder="Sigla")
+                label(for="value") Tribunal:
+                input#value.form-control(type="text" name="value" placeholder="Value")
+        button(type="submit") Adicionar

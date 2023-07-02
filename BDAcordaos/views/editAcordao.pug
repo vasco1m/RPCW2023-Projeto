@@ -1,0 +1,382 @@
+extends layout
+
+block content
+  // Add Font Awesome for icons
+  link(href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl93x0z1pYS0+09K+qwhYQRJ3axXuhzU866UaqXp8k" crossorigin="anonymous")
+  link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+  h1(style="margin-bottom: 20px; margin-top: 20px") Acórdão
+  form(action="/acordaos/update/" + acordao._id method="POST")
+    if u && u.level == 1
+      button(type="submit") Save
+    else
+      button(type="submit") Suggest
+    table.table.table-bordered.table-striped.custom-table(style="margin-top: 20px;")
+      if acordao["Nº Convencional"]
+        tr
+          th Nº Convencional
+          td
+            textarea(name="Nº Convencional", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Nº Convencional"]}
+      if acordao["Acordão"]
+        tr
+          th Acordão
+          td
+            textarea(name="Acordão", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Acordão"]}
+      if acordao["Processo"]
+        tr
+          th Processo
+          td
+            textarea(name="Processo", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Processo"]}
+      if acordao["Nº Processo/TAF"]
+        tr
+          th Nº Processo/TAF
+          td
+            textarea(name="Nº Processo/TAF", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Nº Processo/TAF"]}
+      if acordao["Relator"]
+        tr
+          th Relator
+          td 
+            textarea(name="Relator", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Relator"]}
+      if acordao["Descritores"] && acordao["Descritores"].length > 0
+        tr
+          th Descritores
+          td
+            each descriptor in acordao["Descritores"]
+              div(style='white-space:pre-wrap;')= descriptor
+      if acordao["Nº do Documento"]
+        tr
+          th Nº do Documento
+          td
+            textarea(name="Nº do Documento", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Nº do Documento"]}
+      if (acordao["Data"])
+        tr
+          th Data
+          td
+            input(type="date", name="Data", value=acordao["Data"].toISOString().split("T")[0])
+      if (acordao["Data do Acordão"])
+        tr
+          th Data do Acordão
+          td
+            input(type="date", name="Data do Acordão", value=acordao["Data do Acordão"].toISOString().split("T")[0])
+      if (acordao["Data de Decisão"])
+        tr
+          th Data de Decisão
+          td
+            input(type="date", name="Data de Decisão", value=acordao["Data de Decisão"].toISOString().split("T")[0])
+      if (acordao["Data de Entrada"])
+        tr
+          th Data de Entrada
+          td
+            input(type="date", name="Data de Entrada", value=acordao["Data de Entrada"].toISOString().split("T")[0])
+      if acordao["Espécie"]
+        tr
+          th Espécie
+          td
+            textarea(name="Espécie", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Espécie"]}
+      if acordao["Magistrado"]
+        tr
+          th Magistrado
+          td
+            textarea(name="Magistrado", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Magistrado"]}
+      if acordao["Requerente"]
+        tr
+          th Requerente
+          td
+            textarea(name="Requerente", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Requerente"]}
+      if acordao["Requerido"]
+        tr
+          th Requerido
+          td
+            textarea(name="Requerido", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Requerido"]}
+      if acordao["Recorrente"]
+        tr
+          th Requerente
+          td
+            textarea(name="Recorrente", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Recorrente"]}
+      if acordao["Recorrido"]
+        tr
+          th Requerido
+          td
+            textarea(name="Recorrido", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Recorrido"]}
+      if acordao["Recorrido 1"]
+        tr
+          th Requerido 1
+          td
+            textarea(name="Recorrido 1", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Recorrido 1"]}
+      if acordao["Recorrido 2"]
+        tr
+          th Requerido 2
+          td
+            textarea(name="Recorrido 2", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Recorrido 2"]}
+      if acordao["Votação"]
+        tr
+          th Votação
+          td
+            textarea(name="Votação", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Votação"]}
+      if acordao["Privacidade"]
+        tr
+          th Privacidade
+          td
+            textarea(name="Privacidade", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Privacidade"]}
+      if acordao["Normas Apreciadas"]
+        tr
+          th Normas Apreciadas
+          td
+            textarea(name="Normas Apreciadas", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Normas Apreciadas"]}
+      if acordao["Normas Julgadas Inconst."]  
+        tr
+          th Normas Julgadas Inconst.
+          td
+            textarea(name="Normas Julgadas Inconst.", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Normas Julgadas Inconst."]}
+      if acordao["Contencioso"]
+        tr
+          th Contencioso
+          td
+            textarea(name="Contencioso", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Contencioso"]}
+      if acordao["Peça Processual"]
+        tr
+          th Peça Processual
+          td
+            textarea(name="Peça Processual", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Peça Processual"]}
+      if acordao["Área Temática 1"]
+        tr
+          th Área Temática 1
+          td
+            textarea(name="Área Temática 1", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Área Temática 1"]}
+      if acordao["Área Temática 2"]
+        tr
+          th Área Temática 2
+          td
+            textarea(name="Área Temática 2", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Área Temática 2"]}
+      if acordao["Normas Suscitadas"]
+        tr
+          th Normas Suscitadas
+          td
+            textarea(name="Normas Suscitadas", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Normas Suscitadas"]}
+      if acordao["Nº do Diário da República"]
+        tr
+          th Nº do Diário da República
+          td
+            textarea(name="Nº do Diário da República", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Nº do Diário da República"]}
+      if acordao["Data do Diário da República"]
+        tr
+          th Data do Diário da República
+          td
+            textarea(name="Data do Diário da República", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Data do Diário da República"]}
+      if acordao["Página do Diário da República"]
+        tr
+          th Página do Diário da República
+          td
+            textarea(name="Página do Diário da República", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Página do Diário da República"]}
+      if acordao["Indicações Eventuais"]
+        tr
+          th Indicações Eventuais
+          td
+            textarea(name="Indicações Eventuais", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Indicações Eventuais"]}
+      if acordao["Legislação Nacional"]
+        tr
+          th Legislação Nacional
+          td
+            textarea(name="Legislação Nacional", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Legislação Nacional"]}
+      if acordao["Secção"]
+        tr
+          th Secção
+          td
+            textarea(name="Secção", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Secção"]}
+      if acordao["Sub-Secção"]
+        tr
+          th Sub-Secção
+          td
+            textarea(name="Sub-Secção", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Sub-Secção"]}
+      if acordao["Juízo ou Secção"]
+        tr
+          th Juízo ou Secção
+          td
+            textarea(name="Juízo ou Secção", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Juízo ou Secção"]}
+      if acordao["Tipo de Ação"]
+        tr
+          th Tipo de Ação
+          td
+            textarea(name="Tipo de Ação", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Tipo de Ação"]}
+      if acordao["Tipo de Contrato"]
+        tr
+          th Tipo de Contrato
+          td
+            textarea(name="Tipo de Contrato", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Tipo de Contrato"]}
+      if acordao["Autor"]
+        tr
+          th Autor
+          td
+            textarea(name="Autor", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Autor"]}
+      if acordao["Decisão"]
+        tr
+          th Decisão
+          td
+            textarea(name="Decisão", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Decisão"]}
+      if acordao["Sumário"]
+        tr
+          th Sumário
+          td
+            textarea(name="Sumário", rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Sumário"]}
+      if acordao["Decisão Texto Integral"]
+        tr
+          th Decisão Texto Integral
+          td(style="padding: 0;")
+            textarea(name="Decisão Texto Integral" rows="20" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Decisão Texto Integral"]}
+      if acordao["Texto Integral"]
+        tr
+          th Texto Integral
+          td
+            textarea(name="Texto Integral" rows="20" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Texto Integral"]}
+      if acordao["Texto das Cláusulas Abusivas"]
+        tr
+          th Texto das Cláusulas Abusivas
+          td
+            textarea(name="Texto das Cláusulas Abusivas" rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Texto das Cláusulas Abusivas"]}
+      if acordao["Tema"]
+        tr
+          th Tema
+          td
+            textarea(name="Tema" rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Tema"]}
+      if acordao["Recursos"]
+        tr
+          th Recursos
+          td
+            textarea(name="Recursos" rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Recursos"]}
+      if acordao["Meio Processual"]
+        tr
+          th Meio Processual
+          td
+            textarea(name="Meio Processual" rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Meio Processual"]}
+      if acordao["Tribunal"]
+        tr
+          th Tribunal
+          td
+            textarea(name="Tribunal" rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Tribunal"]}
+      if acordao["Réu"]
+        tr
+          th Réu
+          td
+            textarea(name="Réu" rows="1" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+              | #{acordao["Réu"]}
+      tr
+        th URL
+        td
+          a(href=('http://www.dgsi.pt' + acordao.url) target="_blank") #{'http://www.dgsi.pt' + acordao.url})
+      tr
+        th Tribunal
+        td
+          select(name="tribunal" style="width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;")
+            each court in courts
+              if court.acronym == acordao.tribunal
+                option(value=court.acronym selected) #{court.name}
+              else
+                option(value=court.acronym) #{court.name}
+      tbody#dynamicRows
+    button#addRowBtn(type="button") Add Row
+  script.
+    document.getElementById('addRowBtn').addEventListener('click', function() {
+      var tableBody = document.querySelector('.custom-table tbody');
+
+      // Create a new table row
+      var newRow = document.createElement('tr');
+
+      // Create the TH element and its input field
+      var th = document.createElement('th');
+      var thInput = document.createElement('textarea');
+      thInput.rows = 1;
+      thInput.style = "width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;";
+      th.appendChild(thInput);
+
+      // Create the TD element and its input field
+      var td = document.createElement('td');
+      var tdInput = document.createElement('textarea');
+      tdInput.rows = 1;
+      tdInput.style = "width: 100%; border: none; padding: 0; margin: 0; background-color: transparent;";
+      td.appendChild(tdInput);
+
+      // Append the TH and TD to the new row
+      newRow.appendChild(th);
+      newRow.appendChild(td);
+
+      // Append the new row to the table body
+      tableBody.appendChild(newRow);
+    });
+
+    document.querySelector('#save').addEventListener('click', function(event) {
+      // Get the dynamically added rows
+      var dynamicRows = Array.from(document.querySelectorAll('#dynamicRows tr'));
+
+      // Iterate over the rows to collect their values
+      var dynamicData = dynamicRows.map(function(row) {
+        var thInput = row.querySelector('th textarea');
+        var tdInput = row.querySelector('td textarea');
+        return {
+          header: thInput.value,
+          data: tdInput.value
+        };
+      });
+
+      // Prepare the data for sending in a fetch request
+      var formData = new FormData();
+      dynamicData.forEach((data, index) => {
+        formData.append(`dynamicRows[${index}][header]`, data.header);
+        formData.append(`dynamicRows[${index}][data]`, data.data);
+      });
+
+      // Send the data via fetch
+      fetch('/acordaos/update/' + acordao._id, {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
+      // prevent the form from submitting if this is within a form 'submit' event
+      event.preventDefault();
+    });

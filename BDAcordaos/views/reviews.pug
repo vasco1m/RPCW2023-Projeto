@@ -1,0 +1,65 @@
+extends layout
+
+block content
+  link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+  h1 Reviews
+  if reviews.length == 0
+    h2 Não existem reviews para aprovar
+  else
+    each item in reviews
+      div
+        h2= item.date.toDateString().slice(4)
+        if item.type == 0
+          h3= "Acordão Adicionado"
+        if item.type == 1
+          h3= "Acordão Editado"
+        if item.type == 2
+          h3= "Acordão Apagado"
+        if item.type == 3
+          h3= "Sugestão de Edição"
+        div
+        h3= item.username
+        ul
+          li
+            | Fields:
+            ul
+                each field in item.fields
+                  li
+                    | #{field.field}:
+                    ul
+                      li Old: #{field.old}
+                      li New: #{field.new}
+        div.button-row
+          if item.type == 1
+            form(action=`/acordaos/rejectUpdate/${item.acordaoId}`, method="POST")
+              input(type="hidden", name="updateId", value=item._id)
+              button(type="submit")
+                | 🗑️
+          if item.type == 2
+            form(action=`/acordaos/restoreUpdate/${item.acordaoId}`, method="POST")
+              input(type="hidden", name="updateId", value=item._id)
+              button(type="submit")
+                i.material-icons.restore-icon &#xe8b3;
+            form(action=`/acordaos/rejectUpdate/${item.acordaoId}`, method="POST")
+              input(type="hidden", name="updateId", value=item._id)
+              button(type="submit")
+                | 🗑️
+          if item.type == 3
+            form(action=`/acordaos/acceptUpdate/${item.acordaoId}`, method="POST")
+              input(type="hidden", name="updateId", value=item._id)
+              button(type="submit")
+                i.material-icons.accept-icon &#xe5ca;
+            form(action=`/acordaos/rejectUpdate/${item.acordaoId}`, method="POST")
+              input(type="hidden", name="updateId", value=item._id)
+              button(type="submit")
+                i.material-icons.reject-icon &#xe5cd;
+        style.
+          .button-row {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 10px;
+          }
+
+          .button-row form {
+            display: inline-block;
+          }

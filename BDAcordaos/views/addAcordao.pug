@@ -1,0 +1,63 @@
+extends layout
+
+block content
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+    form(action="/acordaos/add" method="post" id="addAcordaoForm")
+        div
+            label Tribunal:
+            select#tribunal.form-control(name="tribunal")
+                each court in courts
+                    option(value=court.acronym) #{court.name}
+        div#form-container
+            div.form-group
+                label(for="field") Field:
+                select.field.form-control(name="field")
+                    each val in fields
+                        option(value=val) #{val}
+                label(for="value") Value:
+                input#value.form-control(type="text" name="value" placeholder="Value")
+                button.remove-field(type="button") Remove
+        button#add-more(type="button") Adicionar Campo
+        if u.level == 1
+            button(type="submit") Adicionar
+        else
+            button(type="submit") Sugerir Alteração
+    script.
+        $(document).ready(function() {
+            $('#add-more').click(function() {
+                // Clone form-group
+                var formGroupClone = $('.form-group:first').clone(true);
+                
+                // Get the selected option value from the clone
+                var selectedOptionValue = formGroupClone.find('.field option:selected').val();
+                
+                // Remove the selected option from the cloned dropdown
+                //formGroupClone.find('.field option[value="' + selectedOptionValue + '"]').remove();
+                
+                // Append the cloned form-group to the form
+                $('#form-container').append(formGroupClone);
+                
+                // If no more options, hide the "Add More" button
+                if ($('.field:first option').length === 0) {
+                    $('#add-more').hide();
+                }
+            });
+
+            $(document).on('click', '.remove-field', function() {
+                $(this).parent('.form-group').remove();
+            });
+            
+            $(document).on('change', '.field', function() {
+                var inputValue = $(this).siblings('#value');
+                if (this.value === 'Data' || this.value === 'Data do Acordão' || this.value === 'Data da Decisão' || this.value === 'Data de Entrada' || this.value === 'Data do Diário da República' ) {
+                    inputValue.attr('type', 'date');
+                } else {
+                    inputValue.attr('type', 'text');
+                }
+            });
+
+            $('#addAcordaoForm').on('submit', function(e) {
+                e.preventDefault();
+                this.submit();
+            });
+        });

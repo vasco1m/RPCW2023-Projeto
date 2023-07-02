@@ -1,0 +1,39 @@
+extends layout
+
+block content
+    h1 Pesquisas em Curso
+    section#requests-section
+        table#requestsTable.table.table-bordered.table-striped.custom-table(style="margin-top: 20px; text-align: center;")
+            thead
+                tr
+                th Nº Pedido
+                th Pedido
+                th Data Pedido
+                th Data Expiração
+                th Estado
+            tbody
+                each request in requests
+                    if request.concluded === true
+                        tr(data-href="/requests/" + request._id, onclick=`window.location.href=this.dataset.href`)
+                            td #{request._id}
+                            td #{request.search}
+                            td #{request.dateRequested.toLocaleString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' })}
+                            td #{request.expireAt.toLocaleString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' })}
+                            if request.concluded === true
+                                td Concluído
+                            else if request.concluded === false
+                                td Em Processamento
+                            else
+                                td Desconhecido
+                    else
+                        tr
+                            td #{request._id}
+                            td #{request.search}
+                            td #{request.dateRequested.toLocaleString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' })}
+                            td #{request.expireAt.toLocaleString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' })}
+                            if request.concluded === true
+                                td Concluído
+                            else if request.concluded === false
+                                td Em Processamento
+                            else
+                                td Desconhecido

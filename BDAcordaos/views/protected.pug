@@ -1,0 +1,15 @@
+extends layout
+block content
+  .w3-card-4
+    header.w3-indigo
+      h2 Protected Area
+      h3 Olá #{u.name}
+
+    .w3-container
+    p Podes voltar para: 
+      ul.w3-ul 
+        li 
+          a(href="/users/logout") Logout
+        li 
+          a(href="/") Homepage
+  

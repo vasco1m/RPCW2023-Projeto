@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  div.back-link
+    a(href="/acordao/" + acordaoId)
+      span.back-arrow(style="font-size: 30px;") &#8592;
+    h1 Reviews
+    style.
+      div.back-link {
+        display: flex;
+        align-items: center;
+      }
+
+      span.back-arrow {
+        margin-right: 10px;
+      }
+  each item in reviews
+    div
+      h2= item.date.toDateString().slice(4)
+      div
+        h3= item.username
+        if item.type == 3
+          if item.approved == 1
+            h3= "Aprovado por " + item.approvedBy + " em " + item.approvedDate.toDateString().slice(4)
+          else if item.approved == 2
+            h3= "Rejeitado por " + item.approvedBy + " em " + item.approvedDate.toDateString().slice(4)
+          else
+            h3= "Pendente"
+        ul
+          li
+            | Campos alterados:
+            ul
+              each field in item.fields
+                li
+                  | #{field.field}:
+                  ul
+                    li Valor antigo: #{field.old}
+                    li Novo valor: #{field.new}

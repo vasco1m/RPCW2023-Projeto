@@ -1,0 +1,88 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    title BDAcordãos
+    // Add Bootstrap CSS
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+    // Add your custom CSS file here (optional)
+    link(rel="stylesheet" href="/stylesheets/style.css")
+    link(href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet")
+    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js")
+  body
+    // Top bar
+    nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
+      a.navbar-brand(href="/") BDAcordãos
+      div.ml-auto
+        if u
+          span.text-white.ml-2 Bem vindo, #{u.username}
+        else
+          a(href="/users/login" class="text-white ml-2") Login
+        // Personal menu icon button
+        a(href="/personal-menu" class="icon-button")
+          i.fas.fa-user
+    style.
+      .icon-button {
+        display: inline-block;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 24px;
+      }
+      .icon-button:hover {
+        background-color: #0056b3;
+      }
+      .popup-options a {
+        margin-right: 20px;
+      }
+      .favorite-btn {
+        background-color: transparent; /* Remove background */
+        border: none; /* Remove border */
+        color: #FFD700; /* Keep the color of the star */
+      }
+      .favorite-btn .material-icons {
+        color: #d4af37;
+        font-size: 40px;
+      }
+    // Popup options bar
+    div.popup-options
+      a(href="/acordaos") Acordãos
+      if u
+        a(href="/search") Pesquisa
+        a(href="/requests") Pesquisas
+      a(href="/taxonomy") Taxonomia
+      if u
+        a(href="/favorites") Favoritos
+      if u && u.level == 1
+        a(href="/acordaos/add") Adicionar Acordão
+        a(href="/courts/add") Adicionar Tribunal
+        a(href="/reviews") Reviews
+    // Main content
+    block content
+    // Add Bootstrap CSS
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+
+    // Add DataTables CSS
+    link(rel="stylesheet", type="text/css", href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css")
+    link(rel='stylesheet', href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css")
+
+    // Add jQuery JS
+    script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+
+    // Add DataTables JS
+    script(src='https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js')
+
+    // Add Bootstrap and Popper JS
+    script(src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js")
+
+    // Add DataTables Bootstrap JS
+    script(src='https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js')
+
+    // Add Font Awesome for icons
+    link(href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl93x0z1pYS0+09K+qwhYQRJ3axXuhzU866UaqXp8k" crossorigin="anonymous")
+

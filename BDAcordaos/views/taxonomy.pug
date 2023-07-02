@@ -1,0 +1,48 @@
+extends layout
+
+block content
+  // Add jQuery JS
+  script(src='http://code.jquery.com/jquery.js')
+
+  // Add DataTables JS
+  script(src='https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js')
+
+  // Add Font Awesome for icons
+  link(href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl93x0z1pYS0+09K+qwhYQRJ3axXuhzU866UaqXp8k" crossorigin="anonymous")
+  link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+
+  // Add DataTables CSS
+  link(href='https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css', rel='stylesheet')
+
+  h1 Descritores
+  section#descriptors-section
+    table#descriptorsTable.table.table-bordered.table-striped.custom-table(style="margin-top: 20px; text-align: center;")
+      thead
+        tr
+          th Descritor
+
+  script.
+    $(document).ready(function() {
+      $('#descriptorsTable').DataTable({
+        serverSide: true,
+        ajax: '/taxonomy/data',
+        columns: [
+          { 
+            data: null,
+            render: function (data, type, row) {
+              return data;
+            }
+          }
+        ]
+      });
+
+      const tbody = document.querySelector('#descriptorsTable tbody');
+      const dataTable = $('#descriptorsTable').DataTable();
+      tbody.addEventListener('click', function(event) {
+        const target = event.target;
+        const row = target.closest('tr');
+        const rowData = dataTable.row(row).data();
+        const url = `/taxonomy/${rowData}`;
+        window.location.href = url;
+      });
+    });

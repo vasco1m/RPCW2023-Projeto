@@ -1,0 +1,23 @@
+extends layout
+block content
+  .w3-card-4
+    header.w3-indigo 
+      h1 Autenticação
+      if u 
+        h2 Olá #{u.name}(#{u.level})
+
+    .w3-container
+    p Podes fazer as seguintes operações: 
+      ul.w3-ul
+        if !u
+          li
+            a(href="/users/login") Login 
+        if u
+          li
+            a(href="/users/logout") Logout 
+        if !u
+          li
+            a(href="/users/register") Register 
+        if !u
+          li
+            a(href="/protegida") Only for athorized users

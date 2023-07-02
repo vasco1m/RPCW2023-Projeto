@@ -1,0 +1,54 @@
+extends layout
+
+block content
+  // Add jQuery JS
+  script(src='http://code.jquery.com/jquery.js')
+  
+  // Add DataTables JS
+  script(src='https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js')
+  
+  // Add Font Awesome for icons
+  link(href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl93x0z1pYS0+09K+qwhYQRJ3axXuhzU866UaqXp8k" crossorigin="anonymous")
+  link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+
+  // Add DataTables CSS
+  link(href='https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css', rel='stylesheet')
+  header
+      h1 Acordãos Com Notas
+  main
+    section#results-section
+        table#acordaosTable.table.table-bordered.table-striped.custom-table(style="margin-top: 20px; text-align: center;")
+            thead
+                tr
+                    th Nº Conv. / Nº Doc. / Nº Proc.
+                    th Data
+                    th Tribunal
+            tbody
+                each result in results
+                    tr(data-href="/" + result.tribunal + "/" + result._id, onclick=`window.location.href=this.dataset.href`)
+                        if result["Nº Convencional"] && result["Nº Convencional"] !== "" && result["Nº Convencional"] !== null && result["Nº Convencional"] !== undefined
+                          td #{result["Nº Convencional"]}
+                        else if result["Nº do Documento"] && result["Nº do Documento"] !== "" && result["Nº do Documento"] !== null && result["Nº do Documento"] !== undefined
+                          td #{result["Nº do Documento"]}
+                        else if result["Processo"] && result["Processo"] !== "" && result["Processo"] !== null && result["Processo"] !== undefined
+                          td #{result["Processo"]}
+                        else
+                          td  Undefined
+                        if result["Data do Acordão"]
+                          td #{result["Data do Acordão"].toLocaleString('pt-PT', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' })}
+                        else if result["Data da Decisão"]
+                          td #{result["Data da Decisão"].toLocaleString('pt-PT', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' })}
+                        else
+                          td  Undefined
+                        if result.tribunal === "atco1"
+                          td Tribunal Constitucional
+                        else if result.tribunal === "jcon"
+                          td Tribunal de Conflitos
+                        else
+                          td #{result.tribunal}
+    script.
+      $(document).ready(function() {
+        // Get the table element
+        $('#acordaosTable').DataTable();
+        const table = document.getElementById('acordaosTable');
+      });

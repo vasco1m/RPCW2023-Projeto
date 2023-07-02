@@ -1,0 +1,283 @@
+extends layout
+
+block content
+  // Add Font Awesome for icons
+  link(href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl93x0z1pYS0+09K+qwhYQRJ3axXuhzU866UaqXp8k" crossorigin="anonymous")
+  link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+  h1(style="margin-bottom: 20px; margin-top: 20px")
+    span Acórdão
+    if u
+      button.edit-btn(type="button" style="background: none; border: none; margin-left: 10px;")
+        i.material-icons.edit-icon(style="background-color: transparent;") border_color
+    button.reviews-btn(type="button" style="background: none; border: none; margin-left: 10px;")
+      i.material-icons.history-icon(style="background-color: transparent;") history
+  if showFav
+    div(style="display: flex; justify-content: flex-end;")
+      input(id="favoriteTitle" type="text" placeholder="Título do Marcador" value=favorite)
+      if favorite
+        button.favorite-btn(data-id=acordao._id class="added")
+          span.material-icons(style="color: #B8860B;") star
+      else
+        button.favorite-btn(data-id=acordao._id class="not-added")
+          span.material-icons(style="color: #B8860B;") star_border
+  table.table.table-bordered.table-striped.custom-table(style="margin-top: 20px;")
+    if acordao["Nº Convencional"]
+      tr
+        th Nº Convencional
+        td #{acordao["Nº Convencional"]}
+    if acordao["Acordão"]
+      tr
+        th Acordão
+        td #{acordao["Acordão"]}
+    if acordao["Processo"]
+      tr
+        th Processo
+        td #{acordao["Processo"]}
+    if acordao["Nº Processo/TAF"]
+      tr
+        th Nº Processo/TAF
+        td #{acordao["Nº Processo/TAF"]}
+    if acordao["Relator"]
+      tr
+        th Relator
+        td #{acordao["Relator"]}
+    if acordao["Descritores"] && acordao["Descritores"].length > 0
+      tr
+        th Descritores
+        td
+          each descriptor in acordao["Descritores"]
+            div(style='white-space:pre-wrap;')= descriptor
+    if acordao["Nº do Documento"]
+      tr
+        th Nº do Documento
+        td #{acordao["Nº do Documento"]}
+    if acordao["Data"]
+      tr
+        th Data
+        td #{acordao["Data"].toLocaleString('pt-PT', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' })}
+    if acordao["Data do Acordão"]
+      tr
+        th Data do Acordão
+        td #{acordao["Data do Acordão"].toLocaleString('pt-PT', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' })}
+    if acordao["Data de Decisão"]
+      tr
+        th Data de Decisão
+        td #{acordao["Data de Decisão"].toLocaleString('pt-PT', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' })}
+    if acordao["Data de Entrada"]
+      tr
+        th Data de Entrada
+        td #{acordao["Data de Entrada"].toLocaleString('pt-PT', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' })}
+    if acordao["Espécie"]
+      tr
+        th Espécie
+        td #{acordao["Espécie"]}
+    if acordao["Magistrado"]
+      tr
+        th Magistrado
+        td #{acordao["Magistrado"]}
+    if acordao["Requerente"]
+      tr
+        th Requerente
+        td #{acordao["Requerente"]}
+    if acordao["Requerido"]
+      tr
+        th Requerido
+        td #{acordao["Requerido"]}
+    if acordao["Recorrente"]
+      tr
+        th Requerente
+        td #{acordao["Requerente"]}
+    if acordao["Recorrido"]
+      tr
+        th Requerido
+        td #{acordao["Recorrido"]}
+    if acordao["Recorrido 1"]
+      tr
+        th Requerido 1
+        td #{acordao["Recorrido 1"]}
+    if acordao["Recorrido 2"]
+      tr
+        th Requerido 2
+        td #{acordao["Recorrido 2"]}
+    if acordao["Votação"]
+      tr
+        th Votação
+        td #{acordao["Votação"]}
+    if acordao["Privacidade"]
+      tr
+        th Privacidade
+        td #{acordao["Privacidade"]}
+    if acordao["Normas Apreciadas"]
+      tr
+        th Normas Apreciadas
+        td #{acordao["Normas Apreciadas"]}
+    if acordao["Normas Julgadas Inconst."]  
+      tr
+        th Normas Julgadas Inconst.
+        td #{acordao["Normas Julgadas Inconst."]}
+    if acordao["Contencioso"]
+      tr
+        th Contencioso
+        td #{acordao["Contencioso"]}
+    if acordao["Peça Processual"]
+      tr
+        th Peça Processual
+        td #{acordao["Peça Processual"]}
+    if acordao["Área Temática 1"]
+      tr
+        th Área Temática 1
+        td #{acordao["Área Temática 1"]}
+    if acordao["Área Temática 2"]
+      tr
+        th Área Temática 2
+        td #{acordao["Área Temática 2"]}
+    if acordao["Normas Suscitadas"]
+      tr
+        th Normas Suscitadas
+        td #{acordao["Normas Suscitadas"]}
+    if acordao["Nº do Diário da República"]
+      tr
+        th Nº do Diário da República
+        td #{acordao["Nº do Diário da República"]}
+    if acordao["Data do Diário da República"]
+      tr
+        th Data do Diário da República
+        td #{acordao["Data do Diário da República"]}
+    if acordao["Página do Diário da República"]
+      tr
+        th Página do Diário da República
+        td #{acordao["Página do Diário da República"]}
+    if acordao["Indicações Eventuais"]
+      tr
+        th Indicações Eventuais
+        td #{acordao["Indicações Eventuais"]}
+    if acordao["Legislação Nacional"]
+      tr
+        th Legislação Nacional
+        td #{acordao["Legislação Nacional"]}
+    if acordao["Secção"]
+      tr
+        th Secção
+        td #{acordao["Secção"]}
+    if acordao["Sub-Secção"]
+      tr
+        th Sub-Secção
+        td #{acordao["Sub-Secção"]}
+    if acordao["Juízo ou Secção"]
+      tr
+        th Juízo ou Secção
+        td #{acordao["Juízo ou Secção"]}
+    if acordao["Tipo de Ação"]
+      tr
+        th Tipo de Ação
+        td #{acordao["Tipo de Ação"]}
+    if acordao["Tipo de Contrato"]
+      tr
+        th Tipo de Contrato
+        td #{acordao["Tipo de Contrato"]}
+    if acordao["Autor"]
+      tr
+        th Autor
+        td #{acordao["Autor"]}
+    if acordao["Decisão"]
+      tr
+        th Decisão
+        td #{acordao.Decisão}
+    if acordao["Sumário"]
+      tr
+        th Sumário
+        td #{acordao.Sumário}
+    if acordao["Decisão Texto Integral"]
+      tr
+        th Decisão Texto Integral
+        td #{acordao["Decisão Texto Integral"]}
+    if acordao["Texto Integral"]
+      tr
+        th Texto Integral
+        td #{acordao["Texto Integral"]}
+    if acordao["Texto das Cláusulas Abusivas"]
+      tr
+        th Texto das Cláusulas Abusivas
+        td #{acordao["Texto das Cláusulas Abusivas"]}
+    if acordao["Tema"]
+      tr
+        th Tema
+        td #{acordao["Tema"]}
+    if acordao["Recursos"]
+      tr
+        th Recursos
+        td #{acordao["Recursos"]}
+    if acordao["Meio Processual"]
+      tr
+        th Meio Processual
+        td #{acordao["Meio Processual"]}
+    if acordao["Tribunal"]
+      tr
+        th Tribunal
+        td #{acordao["Tribunal"]}
+    if acordao["Réu"]
+      tr
+        th Réu
+        td #{acordao["Réu"]}
+    tr
+      th URL
+      td
+        a(href=('http://www.dgsi.pt' + acordao.url) target="_blank") #{'http://www.dgsi.pt' + acordao.url}
+    tr
+      th Tribunal
+      td #{acordao.tribunal}
+  script.
+    document.querySelectorAll('.favorite-btn').forEach(button => {
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        const itemId = event.currentTarget.dataset.id;
+        const title = document.getElementById('favoriteTitle').value;
+        
+        // Rest of your favorite-btn click event listener code...
+
+        // Include the title in the fetch request
+        if (button.classList.contains('not-added')) {
+          fetch(`/acordaos/addFavorite/${itemId}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ title }), // send the title
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              button.innerHTML = '<span class="material-icons" style="color: #FFD700;">star</span>';
+              button.classList.remove('not-added');
+              button.classList.add('added');
+            }
+          });
+        }
+        else {
+          fetch(`/acordaos/removeFavorite/${itemId}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              button.innerHTML = '<span class="material-icons" style="color: #B8860B;">star_border</span>';
+              button.classList.remove('added');
+              button.classList.add('not-added');
+            }
+          });
+        }
+      });
+      const editButton = document.querySelector('.edit-btn');
+      editButton.addEventListener('click', () => {
+        const acordaoId = "#{acordao._id}";
+        window.location.href = `/acordao/edit/${acordaoId}`;
+      });
+      const reviewsButton = document.querySelector('.reviews-btn');
+      reviewsButton.addEventListener('click', () => {
+        const acordaoId = "#{acordao._id}";
+        window.location.href = `/reviews/${acordaoId}`;
+      });
+    });

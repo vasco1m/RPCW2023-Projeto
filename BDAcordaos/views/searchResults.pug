@@ -1,0 +1,81 @@
+extends layout
+
+block content
+    // Add jQuery JS
+    script(src='http://code.jquery.com/jquery.js')
+    
+    // Add DataTables JS
+    script(src='https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js')
+    
+    // Add Font Awesome for icons
+    link(href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl93x0z1pYS0+09K+qwhYQRJ3axXuhzU866UaqXp8k" crossorigin="anonymous")
+    link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+
+    // Add DataTables CSS
+    link(href='https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css', rel='stylesheet')
+    header
+        h1 Resultados da Pesquisa
+    main
+        div.row
+            div.col
+            p Pesquisa: #{search}
+            div.col
+                div.row
+                    p Data do Pedido: #{date.toLocaleString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' })}
+                div.row
+                    p Data de Conclusão:  #{concluded.toLocaleString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' })}
+                div.row
+                    p Expira a: #{expireAt.toLocaleString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric' })}
+        section#results-section
+            table#acordaosTable.table.table-bordered.table-striped.custom-table(style="margin-top: 20px; text-align: center;")
+                thead
+                    tr
+                        th Nº Conv. / Nº Doc. / Nº Proc.
+                        th Data
+                        th Tribunal
+        script.
+            var id = "#{id}"
+            var courts = !{JSON.stringify(courts)};
+            $(document).ready(function() {
+            $('#acordaosTable').DataTable({
+                serverSide: true,
+                ajax: '/requests/data/' + id,
+                columns: [
+                { 
+                    data: null,
+                    render: function ( data, type, row ) {
+                    if (data["Processo"]) return data["Processo"];
+                    else if (data["Nº Convencional"] && !data["Nº Convencional"].includes("SECÇÃO")) return data["Nº Convencional"];
+                    else if (data["Nº do Documento"]) return data["Nº do Documento"];
+                    else return 'Undefined';
+                    }
+                },
+                { 
+                    data: null,
+                    render: function ( data, type, row ) {
+                    if (data["Data do Acordão"]) return data["Data do Acordão"];
+                    else if (data["Data da Decisão"]) return data["Data da Decisão"];
+                    else if (data["Data"]) return data["Data"];
+                    else return 'Undefined';
+                    }
+                },
+                { 
+                    data: null,
+                    render: function ( data, type, row ) {
+                    var court = courts.find(court => court.acronym === data.tribunal);
+                    return court ? court.name : data.tribunal;
+                    }
+                }
+                ]
+                });
+                const tbody = document.querySelector('#acordaosTable tbody');
+                const dataTable = $('#acordaosTable').DataTable();
+                tbody.addEventListener('click', function(event) {
+                const target = event.target;
+                const row = target.closest('tr');
+                const rowData = dataTable.row(row).data();
+                const id = rowData._id;
+                const url = `/acordao/${id}`;
+                window.location.href = url;
+                });
+            });
